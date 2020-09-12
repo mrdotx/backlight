@@ -3,7 +3,7 @@
 # path:       /home/klassiker/.local/share/repos/backlight/backlight.sh
 # author:     klassiker [mrdotx]
 # github:     https://github.com/mrdotx/backlight
-# date:       2020-09-11T19:27:20+0200
+# date:       2020-09-12T09:48:18+0200
 
 script=$(basename "$0")
 help="$script [-h/--help] -- script to change intel backlight
@@ -24,9 +24,6 @@ if [ ! "$(id -u)" = 0 ]; then
    exit 1
 fi
 
-option=$1
-percent=$2
-
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ -z "$2" ] || [ $# -eq 0 ]; then
     printf "%s\n" "$help"
     exit 0
@@ -34,8 +31,8 @@ else
     max=$(cat /sys/class/backlight/intel_backlight/max_brightness)
     actual=$(cat /sys/class/backlight/intel_backlight/actual_brightness)
 
-    if [ "$percent" -le 100 ] ; then
-        percent=$((100 / percent))
+    if [ "$2" -le 100 ] ; then
+        percent=$((100 / $2))
     else
         printf "%s\n" "$help"
         exit 0
@@ -43,19 +40,22 @@ else
     factor=$((max / percent))
     max=$((factor * percent))
 
-    unset new
-    if [ "$option" = "-inc" ]; then
-        new=$((actual + factor))
-        if [ $new -ge $max ]; then
-            new=$max
-        fi
-    elif [ "$option" = "-dec" ]; then
-        new=$((actual - factor))
-        if [ $new -le 0 ]; then
-            new=0
-        fi
-    fi
+    unset value
+    case "$1" in
+        -inc)
+            value=$((actual + factor))
+            if [ $value -ge $max ]; then
+                value=$max
+            fi
+            ;;
+        -dec)
+            value=$((actual - factor))
+            if [ $value -le 0 ]; then
+                value=0
+            fi
+            ;;
+    esac
 
     # set brighness
-    printf "%s" "$new" > "/sys/class/backlight/intel_backlight/brightness"
+    printf "%s" "$value" > "/sys/class/backlight/intel_backlight/brightness"
 fi
