@@ -3,7 +3,7 @@
 # path:       /home/klassiker/.local/share/repos/backlight/backlight.sh
 # author:     klassiker [mrdotx]
 # github:     https://github.com/mrdotx/backlight
-# date:       2020-09-13T10:44:16+0200
+# date:       2020-10-19T19:50:51+0200
 
 script=$(basename "$0")
 help="$script [-h/--help] -- script to change intel backlight
@@ -20,13 +20,14 @@ help="$script [-h/--help] -- script to change intel backlight
     $script -dec 10"
 
 brightness() {
-    if [ "$1" -ge 0 ] && [ "$1" -le 100 ]; then
-        max=$(cat /sys/class/backlight/intel_backlight/max_brightness)
-        actual=$(cat /sys/class/backlight/intel_backlight/actual_brightness)
+    if [ "$1" -ge 0 ] \
+        && [ "$1" -le 100 ]; then
+            max=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+            actual=$(cat /sys/class/backlight/intel_backlight/actual_brightness)
 
-        percent=$((100 / $1))
-        factor=$((max / percent))
-        max=$((factor * percent))
+            percent=$((100 / $1))
+            factor=$((max / percent))
+            max=$((factor * percent))
     else
         printf "%s\n" "$help"
         exit 1
