@@ -1,9 +1,9 @@
 #!/bin/sh
 
-# path:       /home/klassiker/.local/share/repos/backlight/backlight.sh
-# author:     klassiker [mrdotx]
-# github:     https://github.com/mrdotx/backlight
-# date:       2020-10-19T19:50:51+0200
+# path:   /home/klassiker/.local/share/repos/backlight/backlight.sh
+# author: klassiker [mrdotx]
+# github: https://github.com/mrdotx/backlight
+# date:   2021-01-15T13:29:17+0100
 
 script=$(basename "$0")
 help="$script [-h/--help] -- script to change intel backlight
