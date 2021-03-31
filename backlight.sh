@@ -3,7 +3,7 @@
 # path:   /home/klassiker/.local/share/repos/backlight/backlight.sh
 # author: klassiker [mrdotx]
 # github: https://github.com/mrdotx/backlight
-# date:   2021-01-15T13:29:17+0100
+# date:   2021-03-31T20:06:20+0200
 
 script=$(basename "$0")
 help="$script [-h/--help] -- script to change intel backlight
@@ -63,6 +63,6 @@ esac
 if [ "$(id -u)" = 0 ]; then
     printf "%s" "$value" > "/sys/class/backlight/intel_backlight/brightness"
 else
-    printf "this option needs root privileges to run\n"
+    printf "this script needs root privileges to run\n"
     exit 1
 fi
