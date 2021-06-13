@@ -3,7 +3,7 @@
 # path:   /home/klassiker/.local/share/repos/backlight/backlight.sh
 # author: klassiker [mrdotx]
 # github: https://github.com/mrdotx/backlight
-# date:   2021-03-31T20:06:20+0200
+# date:   2021-06-13T20:54:12+0200
 
 script=$(basename "$0")
 help="$script [-h/--help] -- script to change intel backlight
@@ -18,6 +18,13 @@ help="$script [-h/--help] -- script to change intel backlight
   Examples:
     $script -inc 10
     $script -dec 10"
+
+# helper functions
+check_root() {
+        [ ! "$(id -u)" = 0 ] \
+            && printf "this script needs root privileges to run\n" \
+            && exit 1
+}
 
 brightness() {
     if [ "$1" -ge 0 ] \
@@ -34,6 +41,7 @@ brightness() {
     fi
 }
 
+# main
 case "$1" in
     -h | --help)
         printf "%s\n" "$help"
@@ -60,9 +68,5 @@ case "$1" in
 esac
 
 # check permission and set brightness
-if [ "$(id -u)" = 0 ]; then
-    printf "%s" "$value" > "/sys/class/backlight/intel_backlight/brightness"
-else
-    printf "this script needs root privileges to run\n"
-    exit 1
-fi
+check_root
+printf "%s" "$value" > "/sys/class/backlight/intel_backlight/brightness"
