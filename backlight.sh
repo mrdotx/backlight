@@ -3,7 +3,7 @@
 # path:   /home/klassiker/.local/share/repos/backlight/backlight.sh
 # author: klassiker [mrdotx]
 # github: https://github.com/mrdotx/backlight
-# date:   2021-06-13T21:12:37+0200
+# date:   2021-06-17T12:59:07+0200
 
 script=$(basename "$0")
 help="$script [-h/--help] -- script to change intel backlight
@@ -21,7 +21,7 @@ help="$script [-h/--help] -- script to change intel backlight
 
 # helper functions
 check_root() {
-    [ ! "$(id -u)" = 0 ] \
+    [ "$(id -u)" -ne 0 ] \
         && printf "this script needs root privileges to run\n" \
         && exit 1
 }
